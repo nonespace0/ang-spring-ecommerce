@@ -2,7 +2,7 @@ package com.angularecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//git testing
+//git test
 @SpringBootApplication
 public class AngularEcommerceApplication {
 
