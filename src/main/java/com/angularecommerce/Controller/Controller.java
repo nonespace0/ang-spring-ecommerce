@@ -28,7 +28,10 @@ public class Controller {
     CategoryService categoryService;
     @Autowired
     UserDetailService userDetailService;
-
+    @GetMapping("/")
+    public String getPage(){
+        return "welcome";
+    }
     @GetMapping("/get")
     public List<Categories> get() {
         return categoryService.getData();
