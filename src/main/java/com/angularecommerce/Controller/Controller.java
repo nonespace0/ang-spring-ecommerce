@@ -2,10 +2,12 @@ package com.angularecommerce.Controller;
 
 import com.angularecommerce.Model.Categories;
 import com.angularecommerce.Model.ImageUpload;
+import com.angularecommerce.Model.User;
 import com.angularecommerce.Repository.ImageRepository;
-import com.angularecommerce.Service.UserDetailService;
+
 import com.angularecommerce.Model.UsersDetails;
 import com.angularecommerce.Service.CategoryService;
+import com.angularecommerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class Controller {
 
     @Autowired
@@ -27,7 +29,7 @@ public class Controller {
     @Autowired
     CategoryService categoryService;
     @Autowired
-    UserDetailService userDetailService;
+    UserService userService;
     @GetMapping("/")
     public String getPage(){
         return "welcome";
@@ -45,14 +47,14 @@ public class Controller {
 
     //new user details  register
     @PostMapping("/register")
-    public ResponseEntity<UsersDetails> saveUser(@RequestBody UsersDetails usersDetails) {
-        userDetailService.registerData(usersDetails);
-        return ResponseEntity.ok(usersDetails);
+    public ResponseEntity<User> saveUser(@RequestBody User user) {
+        userService.registerData(user);
+        return ResponseEntity.ok(user);
     }
     //login user
     @PostMapping("/login")
-    public UsersDetails login(@RequestBody UsersDetails loginUser ) throws Exception {
-        UsersDetails user = null;
+    public User login(@RequestBody User loginUser ) throws Exception {
+        User user = null;
         /*UsersDetails oauthUser = userDetailService.login(loginUser.getEmail(), loginUser.getPassword());
         if(Objects.nonNull(oauthUser)) {
             return "welcome";
@@ -60,10 +62,10 @@ public class Controller {
         else {
             return  "Failed";
         }*/
-        String loginMail = loginUser.getEmail();
+        String loginUserName = loginUser.getUserName();
         String loginPassword = loginUser.getPassword();
-        if (loginMail != null && loginPassword != null) {
-            user = userDetailService.login(loginMail, loginPassword);
+        if (loginUserName != null && loginPassword != null) {
+            user = userService.login(loginUserName, loginPassword);
 
         }
         if(user== null){
